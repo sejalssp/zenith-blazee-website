@@ -25,6 +25,9 @@ export default defineNuxtConfig({
       title: 'Zenith Blazee | Mutual Fund Distributor',
       meta: [
         { name: 'theme-color', content: '#0D1B2A' }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/png', href: '/logo.png' }
       ]
     }
   }
