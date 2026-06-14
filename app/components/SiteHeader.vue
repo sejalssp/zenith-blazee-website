@@ -84,6 +84,7 @@ const menuOpen = ref(false)
 
 const navLinks = [
   { to: '/', label: 'Home' },
+  { to: '/services', label: 'Services' },
   { to: '/about', label: 'About Us' },
 ]
 

@@ -103,17 +103,24 @@ const symbolPool = [
 const symbols = ref([])
 
 onMounted(() => {
-  symbols.value = Array.from({ length: 18 }, (_, i) => ({
-    id: i,
-    type: symbolPool[i % symbolPool.length],
-    style: {
-      left:              `${4 + Math.round(Math.random() * 90)}%`,
-      fontSize:          `${11 + Math.round(Math.random() * 11)}px`,
-      animationDuration: `${20 + Math.round(Math.random() * 18)}s`,
-      animationDelay:    `-${Math.round(Math.random() * 28)}s`,
-      opacity:           +(0.18 + Math.random() * 0.22).toFixed(2)
+  symbols.value = Array.from({ length: 18 }, (_, i) => {
+    // Spawn only on left edge (3–17%) or right edge (70–93%) — never in centre where text sits
+    const onRight = Math.random() > 0.38
+    const left = onRight
+      ? 70 + Math.round(Math.random() * 23)
+      :  3 + Math.round(Math.random() * 14)
+    return {
+      id: i,
+      type: symbolPool[i % symbolPool.length],
+      style: {
+        left:              `${left}%`,
+        fontSize:          `${11 + Math.round(Math.random() * 11)}px`,
+        animationDuration: `${20 + Math.round(Math.random() * 18)}s`,
+        animationDelay:    `-${Math.round(Math.random() * 28)}s`,
+        opacity:           +(0.18 + Math.random() * 0.22).toFixed(2)
+      }
     }
-  }))
+  })
 })
 </script>
 
@@ -125,6 +132,9 @@ onMounted(() => {
   pointer-events: none;
   position: absolute;
   z-index: 1;
+  /* Fade out the central text zone — visible only at edges/corners */
+  -webkit-mask-image: radial-gradient(ellipse 62% 58% at 50% 50%, transparent 30%, rgba(0,0,0,0.35) 58%, black 80%);
+  mask-image: radial-gradient(ellipse 62% 58% at 50% 50%, transparent 30%, rgba(0,0,0,0.35) 58%, black 80%);
 }
 
 .hero-chart-svg {
